@@ -23,13 +23,20 @@ public class Client {
 
   }
 
+  public Client(String name, String email, String password) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
+
+
   public String getName() {
     return this.name;
   }
 
- public String getEmail(){
+  public String getEmail() {
     return this.email;
- }
+  }
 
   public void setEmail(String email) {
     this.email = email;
@@ -39,7 +46,7 @@ public class Client {
     this.name = name;
   }
 
-  public Long getId(){
+  public Long getId() {
     return this.id;
   }
 
