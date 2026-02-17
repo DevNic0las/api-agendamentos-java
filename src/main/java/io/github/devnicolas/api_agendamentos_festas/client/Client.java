@@ -1,5 +1,6 @@
 package io.github.devnicolas.api_agendamentos_festas.client;
 
+import io.github.devnicolas.api_agendamentos_festas.client.exceptions.EmailInvalidExeception;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,13 +21,12 @@ public class Client {
   private String password;
 
   public Client() {
-
   }
 
   public Client(String name, String email, String password) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
+    setEmail(email);
+    setName(name);
+    setPassword(password);
   }
 
 
@@ -39,10 +39,14 @@ public class Client {
   }
 
   public void setEmail(String email) {
+    if (email == null || !email.contains("@"))
+      throw new EmailInvalidExeception("Formato Emáil inválido");
     this.email = email;
   }
 
   public void setName(String name) {
+    if (name == null || name.isBlank())
+      throw new IllegalArgumentException("Nome não pode ser vazio");
     this.name = name;
   }
 
@@ -51,6 +55,9 @@ public class Client {
   }
 
   public void setPassword(String password) {
+    if (password == null || password.length() < 6)
+      throw new IllegalArgumentException("Senha deve ter no mínimo 6 caracteres");
+
     this.password = password;
   }
 }

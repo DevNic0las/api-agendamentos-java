@@ -14,6 +14,8 @@ public abstract class BaseServiceImpl<T, D, ID> implements CrudService<T, D, ID>
 
   protected abstract T toEntity(D dto);
 
+  protected abstract void updateEntity(T entity, D dto);
+
   @Override
   public T create(D dtoRequest) {
     T entity = toEntity(dtoRequest);
@@ -28,9 +30,15 @@ public abstract class BaseServiceImpl<T, D, ID> implements CrudService<T, D, ID>
     this.repository.deleteById(id);
   }
 
+
   @Override
   public T update(ID id, D dto) {
-    return null;
+    T entity = repository.findById(id)
+      .orElseThrow(() -> new RuntimeException("Id não encontrado: " + id));
+
+    updateEntity(entity, dto);
+
+    return repository.save(entity);
   }
 
   @Override
@@ -40,6 +48,6 @@ public abstract class BaseServiceImpl<T, D, ID> implements CrudService<T, D, ID>
 
   @Override
   public Optional<T> findById(ID id) {
-   return this.repository.findById(id);
+    return this.repository.findById(id);
   }
 }
