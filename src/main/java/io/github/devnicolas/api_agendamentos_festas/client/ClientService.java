@@ -22,5 +22,10 @@ public class ClientService extends BaseServiceImpl<Client, ClientRequestDTO, Lon
     return new Client(dto.name(), dto.email(), dto.password());
   }
 
+  @Override
+  protected void updateEntity(Client entity, ClientRequestDTO dto) {
+
+  }
+
 
 }

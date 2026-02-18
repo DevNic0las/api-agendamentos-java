@@ -17,4 +17,10 @@ public class PlaceService extends BaseServiceImpl<Place, PlaceRequestDTO, Long> 
   protected Place toEntity(PlaceRequestDTO dto) {
     return new Place(dto.name(), dto.capacity(), dto.address());
   }
+
+  @Override
+  protected void updateEntity(Place entity, PlaceRequestDTO dto) {
+
+  }
+
 }
