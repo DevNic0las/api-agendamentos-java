@@ -26,3 +26,13 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8180/realms/agendamentos
+
+  springdoc:
+    swagger-ui:
+
+      path: /documentacao
+
+      operationsSorter: alpha
+    api-docs:
+
+      path: /api-docs
