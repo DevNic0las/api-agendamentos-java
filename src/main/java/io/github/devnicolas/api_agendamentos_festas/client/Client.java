@@ -1,7 +1,9 @@
 package io.github.devnicolas.api_agendamentos_festas.client;
 
-import io.github.devnicolas.api_agendamentos_festas.client.exceptions.EmailInvalidExeception;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table(name = "client")
@@ -14,34 +16,19 @@ public class Client {
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false, unique = true)
-  private String email;
+  @Column(nullable = false)
+  private String phoneNumber;
 
   @Column(nullable = false)
-  private String password;
+  private LocalDate dateOfBirth;
 
-  public Client() {
+  protected Client() {
   }
 
-  public Client(String name, String email, String password) {
-    setEmail(email);
+  public Client(String name, String phoneNumber, LocalDate dateOfBirth) {
     setName(name);
-    setPassword(password);
-  }
-
-
-  public String getName() {
-    return this.name;
-  }
-
-  public String getEmail() {
-    return this.email;
-  }
-
-  public void setEmail(String email) {
-    if (email == null || !email.contains("@"))
-      throw new EmailInvalidExeception("Formato Emáil inválido");
-    this.email = email;
+    setPhoneNumber(phoneNumber);
+    setDateOfBirth(dateOfBirth);
   }
 
   public void setName(String name) {
@@ -50,14 +37,35 @@ public class Client {
     this.name = name;
   }
 
-  public Long getId() {
-    return this.id;
+  public void setPhoneNumber(String phoneNumber) {
+    if (phoneNumber == null || phoneNumber.isBlank())
+      throw new IllegalArgumentException("Telefone é obrigatório");
+    this.phoneNumber = phoneNumber;
   }
 
-  public void setPassword(String password) {
-    if (password == null || password.length() < 6)
-      throw new IllegalArgumentException("Senha deve ter no mínimo 6 caracteres");
+  public void setDateOfBirth(LocalDate dateOfBirth) {
 
-    this.password = password;
+    if (dateOfBirth == null)
+      throw new IllegalArgumentException("Data de nascimento é obrigatória");
+
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public LocalDate getDateOfBirth() {
+    return dateOfBirth;
   }
 }
+
+

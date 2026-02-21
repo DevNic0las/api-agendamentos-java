@@ -1,4 +1,5 @@
 package io.github.devnicolas.api_agendamentos_festas.client;
+
 import io.github.devnicolas.api_agendamentos_festas.client.dtos.ClientRequestDTO;
 import io.github.devnicolas.api_agendamentos_festas.client.dtos.ClientResponseDTO;
 import io.github.devnicolas.api_agendamentos_festas.interfaces.services.CrudService;
@@ -17,6 +18,6 @@ public class ClientController extends BaseControllerImpl<Client, ClientRequestDT
 
   @Override
   protected ClientResponseDTO toResponseDTO(Client entity) {
-    return new ClientResponseDTO(entity.getName(), entity.getEmail(), entity.getId());
+    return new ClientResponseDTO(entity.getName(), entity.getPhoneNumber(), entity.getDateOfBirth(),entity.getId());
   }
 }

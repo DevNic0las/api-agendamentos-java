@@ -2,6 +2,7 @@ package io.github.devnicolas.api_agendamentos_festas.interfaces.services;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ public abstract class BaseServiceImpl<T, D, ID> implements CrudService<T, D, ID>
 
   protected BaseServiceImpl(JpaRepository<T, ID> repository) {
     this.repository = repository;
+
   }
 
   protected abstract T toEntity(D dto);
