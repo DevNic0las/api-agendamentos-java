@@ -22,88 +22,92 @@ import java.util.List;
 @Tag(name = "Bookings", description = "Gerenciamento de agendamentos de festas")
 public class BookingController extends BaseControllerImpl<Booking, BookingRequestDTO, BookingResponseDTO, Long> {
 
-  public BookingController(BookingService bookingService) {
-    super(bookingService);
-  }
+    public BookingController(BookingService bookingService) {
+        super(bookingService);
+    }
 
-  @Override
-  @PreAuthorize("hasRole('ADMIN')")
-  @Operation(summary = "Criar novo agendamento", description = "Cria um novo agendamento de festa com espaço, cliente, datas, valor e pacote")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Agendamento criado com sucesso",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
-      @ApiResponse(responseCode = "400", description = "Dados inválidos (place não existe, datas inválidas, value <= 0)"),
-      @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
-  @SecurityRequirement(name = "bearer-jwt")
-  public ResponseEntity<BookingResponseDTO> create(@RequestBody BookingRequestDTO dtoRequest) {
-    return super.create(dtoRequest);
-  }
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Criar novo agendamento", description = "Cria um novo agendamento de festa com espaço, cliente, datas, valor e pacote")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Agendamento criado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos (place não existe, datas inválidas, value <= 0)"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    @SecurityRequirement(name = "bearer-jwt")
+    public ResponseEntity<BookingResponseDTO> create(@RequestBody BookingRequestDTO dtoRequest) {
+        return super.create(dtoRequest);
+    }
 
-  @Override
-  @Operation(summary = "Buscar agendamento por ID", description = "Retorna os dados de um agendamento específico")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Agendamento encontrado",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
-      @ApiResponse(responseCode = "404", description = "Agendamento não encontrado"),
-      @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
-  @SecurityRequirement(name = "bearer-jwt")
-  public ResponseEntity<BookingResponseDTO> findById(@PathVariable Long id) {
-    return super.findById(id);
-  }
+    @Override
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT')")
+    @Operation(summary = "Buscar agendamento por ID", description = "Retorna os dados de um agendamento específico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Agendamento encontrado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Agendamento não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    @SecurityRequirement(name = "bearer-jwt")
+    public ResponseEntity<BookingResponseDTO> findById(@PathVariable Long id) {
+        return super.findById(id);
+    }
 
-  @Override
-  @Operation(summary = "Listar todos os agendamentos", description = "Retorna uma lista de todos os agendamentos cadastrados")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Lista de agendamentos retornada com sucesso",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
-      @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
-  @SecurityRequirement(name = "bearer-jwt")
-  public ResponseEntity<List<BookingResponseDTO>> findAll() {
-    return super.findAll();
-  }
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Listar todos os agendamentos", description = "Retorna uma lista de todos os agendamentos cadastrados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de agendamentos retornada com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    @SecurityRequirement(name = "bearer-jwt")
+    public ResponseEntity<List<BookingResponseDTO>> findAll() {
+        return super.findAll();
+    }
 
-  @Override
-  @Operation(summary = "Atualizar agendamento", description = "Atualiza os dados de um agendamento existente (cliente, datas, valor, pacote, espaço)")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Agendamento atualizado com sucesso",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
-      @ApiResponse(responseCode = "400", description = "Dados inválidos (datas inválidas, value <= 0, place não existe)"),
-      @ApiResponse(responseCode = "404", description = "Agendamento não encontrado"),
-      @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
-  @SecurityRequirement(name = "bearer-jwt")
-  public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
-    return super.update(id, dto);
-  }
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Atualizar agendamento", description = "Atualiza os dados de um agendamento existente (cliente, datas, valor, pacote, espaço)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Agendamento atualizado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos (datas inválidas, value <= 0, place não existe)"),
+            @ApiResponse(responseCode = "404", description = "Agendamento não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    @SecurityRequirement(name = "bearer-jwt")
+    public ResponseEntity<BookingResponseDTO> update(@PathVariable Long id, @RequestBody BookingRequestDTO dto) {
+        return super.update(id, dto);
+    }
 
-  @Override
-  @Operation(summary = "Deletar agendamento", description = "Remove um agendamento do sistema")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "204", description = "Agendamento deletado com sucesso"),
-      @ApiResponse(responseCode = "404", description = "Agendamento não encontrado"),
-      @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
-  @SecurityRequirement(name = "bearer-jwt")
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
-    return super.delete(id);
-  }
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Deletar agendamento", description = "Remove um agendamento do sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Agendamento deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Agendamento não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    @SecurityRequirement(name = "bearer-jwt")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        return super.delete(id);
+    }
 
-  @Override
-  protected BookingResponseDTO toResponseDTO(Booking booking) {
-    return new BookingResponseDTO(
-      booking.getId(),
-      booking.getPlace().getId(),
-      booking.getClientName(),
-      booking.getBookingStatus(),
-      booking.getValue(),
-      booking.getPartyPackage(),
-      booking.getEventDate(),
-      booking.getDateEnd(),
-      booking.getCreatedAt()
-    );
-  }
+    @Override
+    protected BookingResponseDTO toResponseDTO(Booking booking) {
+        return new BookingResponseDTO(
+                booking.getId(),
+                booking.getPlace().getId(),
+                booking.getClientName(),
+                booking.getBookingStatus(),
+                booking.getValue(),
+                booking.getPartyPackage(),
+                booking.getEventDate(),
+                booking.getDateEnd(),
+                booking.getCreatedAt()
+        );
+    }
 
 }

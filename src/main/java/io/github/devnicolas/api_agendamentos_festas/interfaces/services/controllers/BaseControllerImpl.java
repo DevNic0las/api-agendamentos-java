@@ -1,4 +1,5 @@
 package io.github.devnicolas.api_agendamentos_festas.interfaces.services.controllers;
+import io.github.devnicolas.api_agendamentos_festas.exception.ResourceNotFoundException;
 import io.github.devnicolas.api_agendamentos_festas.interfaces.services.CrudService;
 import io.github.devnicolas.api_agendamentos_festas.place.dtos.PlaceResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public abstract class BaseControllerImpl<T, REQ, RES, ID> implements CrudControl
   public ResponseEntity<RES> findById(@PathVariable ID id) {
     return this.service.findById(id).map(this::toResponseDTO)
             .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+            .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado com o ID: " + id));
   }
 
   @GetMapping
