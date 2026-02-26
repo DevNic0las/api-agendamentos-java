@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class BookingController extends BaseControllerImpl<Booking, BookingReques
   }
 
   @Override
+  @PreAuthorize("hasRole('ADMIN')")
   @Operation(summary = "Criar novo agendamento", description = "Cria um novo agendamento de festa com espaço, cliente, datas, valor e pacote")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Agendamento criado com sucesso",
