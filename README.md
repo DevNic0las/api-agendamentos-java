@@ -1,4 +1,4 @@
-# API de Agendamentos de Festas – Resumo Enxuto
+# API de Agendamentos de Festas
 
 ## Arquitetura
 Camadas + Domain-Driven Design (DDD)
